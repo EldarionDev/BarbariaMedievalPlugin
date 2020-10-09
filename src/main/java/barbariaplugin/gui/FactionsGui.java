@@ -1,18 +1,18 @@
 package barbariaplugin.gui;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class FactionsGui implements Listener {
+    public FactionsGui() {
+        inventory = null;
+    }
+
     public FactionsGui(Player caller) {
         player = caller;
         inventory = Bukkit.createInventory(caller, 18, "Factions Menu");
@@ -52,15 +52,10 @@ public class FactionsGui implements Listener {
         closeButtonMeta.setDisplayName("Close this GUI.");
         closeButton.setItemMeta(closeButtonMeta);
         inventory.setItem(17, closeButton);
+
     }
 
-    @EventHandler
-    public void onInventoryClick(final InventoryClickEvent event) {
-        if (event.getInventory() != inventory) return;
-        event.setCancelled(true);
-        final ItemStack clickedItem = event.getCurrentItem();
-        if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
-        final Player player = (Player)event.getWhoClicked();
+    public void handleClick(Player player, ItemStack clickedItem) {
         switch (clickedItem.getType()) {
             case RED_WOOL:
                 player.closeInventory();
@@ -71,13 +66,6 @@ public class FactionsGui implements Listener {
             case OAK_DOOR:
                 player.sendMessage("Joining a faction.");
                 break;
-        }
-    }
-
-    @EventHandler
-    public void onInventoryClick(final InventoryDragEvent event) {
-        if (event.getInventory() == inventory) {
-            event.setCancelled(true);
         }
     }
 

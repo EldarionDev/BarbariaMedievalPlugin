@@ -1,5 +1,6 @@
 package barbariaplugin.barbariaplugin;
 
+import barbariaplugin.events.EventManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -13,6 +14,7 @@ public final class Barbariaplugin extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         getLogger().info("Launching Barbaria Plugin.");
+        getServer().getPluginManager().registerEvents(new EventManager(), this);
     }
 
     @Override
