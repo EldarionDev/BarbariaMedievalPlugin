@@ -1,0 +1,20 @@
+name: Barbariaplugin
+version: ${project.version}
+main: barbariaplugin.barbariaplugin.Barbariaplugin
+api-version: 1.15
+authors: [ Eldarion ]
+description: The official Barbaria plugin by EldarionDev.
+
+commands:
+  factions:
+    description: Opens the factions menu.
+    usage: /<command>
+    aliases: [faction, f]
+  armies:
+    description: Opens the armies menu.
+    usage: /<command>
+    aliases: [army, a]
+  territories:
+    description: Opens the territories menu.
+    usage: /<command>
+    aliases: [territory, t]
