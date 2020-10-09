@@ -15,9 +15,7 @@ public class EventManager implements Listener {
     }
     @EventHandler
     public void onInventoryClick(final InventoryClickEvent event) {
-        if (!event.getView().getTitle().equalsIgnoreCase("Factions Menu")) {
-            event.getWhoClicked().sendMessage("Found GUI:" + event.getView().getTitle());
-        }
+        if (!event.getView().getTitle().equalsIgnoreCase("Factions Menu")) return;
         event.setCancelled(true);
         final ItemStack clickedItem = event.getCurrentItem();
         if (clickedItem == null || clickedItem.getType() == Material.AIR) return;

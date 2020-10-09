@@ -1,6 +1,7 @@
 package barbariaplugin.gui;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -19,6 +20,28 @@ public class FactionsGui implements Listener {
         this.createUserGui();
         this.createCloseButton();
         caller.openInventory(inventory);
+    }
+
+    public void handleClick(Player player, ItemStack clickedItem) {
+        switch (clickedItem.getType()) {
+            case RED_WOOL:
+                player.closeInventory();
+                break;
+            case NETHER_STAR:
+                this.createFaction(player);
+                break;
+            case OAK_DOOR:
+                this.joinFaction(player);
+                break;
+        }
+    }
+
+    private void joinFaction(Player player) {
+        player.sendMessage(ChatColor.GOLD + "Congratulations, you have decided to join a faction!");
+    }
+
+    private void createFaction(Player player) {
+        player.sendMessage(ChatColor.GOLD + "Congratulations, you have decided to create a faction!");
     }
 
     private void createUserGui() {
@@ -55,19 +78,6 @@ public class FactionsGui implements Listener {
 
     }
 
-    public void handleClick(Player player, ItemStack clickedItem) {
-        switch (clickedItem.getType()) {
-            case RED_WOOL:
-                player.closeInventory();
-                break;
-            case NETHER_STAR:
-                player.sendMessage("Creating new faction.");
-                break;
-            case OAK_DOOR:
-                player.sendMessage("Joining a faction.");
-                break;
-        }
-    }
 
     Player player;
     private final Inventory inventory;
