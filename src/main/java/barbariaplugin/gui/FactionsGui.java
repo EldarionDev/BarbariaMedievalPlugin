@@ -195,8 +195,8 @@ public class FactionsGui implements Listener {
         inventory.setItem(1, joinRequestsItem);
         inventory.setItem(7, makeProposalItem);
         inventory.setItem(8, seeProposalsItem);
-        inventory.setItem(4, offerTradeItem);
-        inventory.setItem(5, seeTradesItem);
+        inventory.setItem(3, offerTradeItem);
+        inventory.setItem(4, seeTradesItem);
         inventory.setItem(9, declareWarItem);
         inventory.setItem(10, ceaseFireItem);
         inventory.setItem(12, changeOwnerItem);
