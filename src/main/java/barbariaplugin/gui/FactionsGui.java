@@ -135,6 +135,7 @@ public class FactionsGui implements Listener {
         if (names == null) {
             player.sendMessage("There are no pending requests.");
             acceptRequest = null;
+            return;
         }
         for (String name : names) {
             player.sendMessage(name);
@@ -151,6 +152,7 @@ public class FactionsGui implements Listener {
         if (names == null) {
             player.sendMessage("There are no pending requests.");
             declineRequest = null;
+            return;
         }
         for (String name : names) {
             player.sendMessage(name);
