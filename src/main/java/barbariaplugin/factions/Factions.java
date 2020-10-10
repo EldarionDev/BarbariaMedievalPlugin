@@ -1,5 +1,6 @@
 package barbariaplugin.factions;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.File;
@@ -25,7 +26,16 @@ public class Factions {
         while (itF.hasNext()) {
             Map.Entry pair = (Map.Entry) itF.next();
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("faction_leader", factionLeaders.get(pair.getKey()));
+            jsonObject.put("faction_leader", factionLeaders.get(pair.getKey().toString()).toString());
+            JSONArray members = new JSONArray();
+            Iterator itM = factionMembers.entrySet().iterator();
+            while (itM.hasNext()) {
+                Map.Entry member_pair = (Map.Entry) itM.next();
+                if (member_pair.getValue().toString().equalsIgnoreCase(pair.getKey().toString())) {
+                    members.add(member_pair.getKey().toString());
+                }
+            }
+            jsonObject.put("faction_members", members);
             try {
                 FileWriter jsonFile = new FileWriter("factions/" + pair.getKey() + ".json");
                 jsonFile.write(jsonObject.toJSONString());
