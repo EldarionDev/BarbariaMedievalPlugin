@@ -15,13 +15,22 @@ public class EventManager implements Listener {
     }
     @EventHandler
     public void onInventoryClick(final InventoryClickEvent event) {
-        if (!event.getView().getTitle().equalsIgnoreCase("Factions Menu")) return;
-        event.setCancelled(true);
         final ItemStack clickedItem = event.getCurrentItem();
         if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
         final Player player = (Player)event.getWhoClicked();
-        FactionsGui tmp = new FactionsGui();
-        tmp.handleClick(player, clickedItem);
+        switch (event.getView().getTitle().toLowerCase()) {
+            case "factions menu":
+                event.setCancelled(true);
+                FactionsGui tmp = new FactionsGui();
+                tmp.handleClick(player, clickedItem);
+                break;
+            case "armies menu":
+                break;
+            case "territories menu":
+                break;
+            default:
+                break;
+        }
     }
 
     @EventHandler

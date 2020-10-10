@@ -38,10 +38,12 @@ public class FactionsGui implements Listener {
 
     private void joinFaction(Player player) {
         player.sendMessage(ChatColor.GOLD + "Congratulations, you have decided to join a faction!");
+        player.closeInventory();
     }
 
     private void createFaction(Player player) {
         player.sendMessage(ChatColor.GOLD + "Congratulations, you have decided to create a faction!");
+        player.closeInventory();
     }
 
     private void createUserGui() {
