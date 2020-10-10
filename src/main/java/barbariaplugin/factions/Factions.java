@@ -138,6 +138,18 @@ public class Factions {
         return factionLeaders.get(name);
     }
 
+    public static List<String> getMembers(String name) {
+        List<String> returnList = new ArrayList<String>();
+        Iterator itM = factionMembers.entrySet().iterator();
+        while (itM.hasNext()) {
+            Map.Entry pair = (Map.Entry) itM.next();
+            if (pair.getValue().toString().equalsIgnoreCase(name)) {
+                returnList.add(Bukkit.getPlayer((UUID) pair.getKey()).getDisplayName());
+            }
+        }
+        return returnList;
+    }
+
     public static String getMemberFactionName(UUID member) {
         Iterator itM = factionMembers.entrySet().iterator();
         while (itM.hasNext()) {

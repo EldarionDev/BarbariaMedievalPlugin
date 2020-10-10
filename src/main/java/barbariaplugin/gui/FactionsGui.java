@@ -57,8 +57,19 @@ public class FactionsGui implements Listener {
             case ZOMBIE_HEAD:
                 this.openRequestGui(player);
                 break;
+            case PLAYER_HEAD:
+                this.sendPlayerList(player);
+                break;
             default:
                 break;
+        }
+    }
+
+    private void sendPlayerList(Player player) {
+        player.sendMessage("Player list of your faction: ");
+        String playerFactionName = Factions.getFaction(Factions.getMemberFactionName(player.getUniqueId())).factionName;
+        for (String member : Factions.getMembers(playerFactionName)) {
+            player.sendMessage(member);
         }
     }
 
