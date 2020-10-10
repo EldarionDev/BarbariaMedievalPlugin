@@ -64,10 +64,10 @@ public class FactionsGui implements Listener {
 
     public void handleRequestClick(Player player, ItemStack clickedItem) {
         switch (clickedItem.getType()) {
-            case RED_WOOL:
+            case GREEN_WOOL:
                 this.acceptRequestMessage(player);
                 break;
-            case GREEN_WOOL:
+            case RED_WOOL:
                 this.declineRequestMessage(player);
                 break;
         }
@@ -103,7 +103,7 @@ public class FactionsGui implements Listener {
     }
 
     private void openRequestGui (Player player) {
-        respondRequest = true;
+        respondRequest = player;
         player.closeInventory();
 
         Inventory requestInventory = Bukkit.createInventory(player, 9, "Requests");
@@ -116,7 +116,7 @@ public class FactionsGui implements Listener {
         final ItemMeta declineItemMeta = declineItem.getItemMeta();
 
         acceptItemMeta.setDisplayName("Accept requests.");
-        acceptItemMeta.setDisplayName("Decline Requests.");
+        declineItemMeta.setDisplayName("Decline Requests.");
 
         acceptItem.setItemMeta(acceptItemMeta);
         declineItem.setItemMeta(declineItemMeta);
@@ -126,31 +126,39 @@ public class FactionsGui implements Listener {
     }
 
     public void acceptRequestMessage (Player player) {
-        respondRequest = false;
-        acceptRequest = true;
+        respondRequest = null;
+        acceptRequest = player;
         player.sendMessage("Please enter one of the following names to accept: ");
         Faction playerFaction = Factions.getFaction(Factions.getMemberFactionName(player.getUniqueId()));
-        for (String name : playerFaction.getRequests()) {
+        List<String> names = playerFaction.getRequests();
+        if (names == null) {
+            player.sendMessage("There are no pending requests.");
+        }
+        for (String name : names) {
             player.sendMessage(name);
         }
     }
 
     public void declineRequestMessage (Player player) {
-        respondRequest = false;
-        acceptRequest = true;
+        respondRequest = null;
+        declineRequest = player;
         player.sendMessage("Please enter one of the following names to decline: ");
         Faction playerFaction = Factions.getFaction(Factions.getMemberFactionName(player.getUniqueId()));
-        for (String name : playerFaction.getRequests()) {
+        List<String> names = playerFaction.getRequests();
+        if (names == null) {
+            player.sendMessage("There are no pending requests.");
+        }
+        for (String name : names) {
             player.sendMessage(name);
         }
     }
 
-    public void acceptRequest (Player player, String name, AsyncPlayerChatEvent event) {
-        acceptRequest = false;
+    public void acceptRequest (Player caller, String name, AsyncPlayerChatEvent event) {
+        acceptRequest = player;
     }
 
-    public void declineRequest (Player player, String name, AsyncPlayerChatEvent event) {
-        declineRequest = false;
+    public void declineRequest (Player caller, String name, AsyncPlayerChatEvent event) {
+        declineRequest = player;
     }
 
     private void joinFactionMessage(Player player) {
@@ -298,8 +306,8 @@ public class FactionsGui implements Listener {
     Player player;
     public static Player factionCreator = null;
     public static Player factionJoiner = null;
-    public boolean respondRequest = false;
-    public boolean acceptRequest = false;
-    public boolean declineRequest = false;
+    public static Player respondRequest = null;
+    public static Player acceptRequest = null;
+    public static Player declineRequest = null;
     private final Inventory inventory;
 }
