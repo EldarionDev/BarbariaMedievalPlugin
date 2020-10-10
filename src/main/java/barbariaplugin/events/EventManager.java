@@ -26,6 +26,11 @@ public class EventManager implements Listener {
                 FactionsGui tmp = new FactionsGui();
                 tmp.handleClick(player, clickedItem);
                 break;
+            case "requests":
+                event.setCancelled(true);
+                FactionsGui tmp2 = new FactionsGui();
+                tmp2.handleRequestClick(player, clickedItem);
+                break;
             case "armies menu":
                 break;
             case "territories menu":

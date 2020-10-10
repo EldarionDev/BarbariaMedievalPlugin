@@ -1,5 +1,6 @@
 package barbariaplugin.gui;
 
+import barbariaplugin.factions.Faction;
 import barbariaplugin.factions.Factions;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -54,7 +55,20 @@ public class FactionsGui implements Listener {
                 this.joinFactionMessage(player);
                 break;
             case ZOMBIE_HEAD:
-                this.openRequestGui();
+                this.openRequestGui(player);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void handleRequestClick(Player player, ItemStack clickedItem) {
+        switch (clickedItem.getType()) {
+            case RED_WOOL:
+                this.acceptRequestMessage(player);
+                break;
+            case GREEN_WOOL:
+                this.declineRequestMessage(player);
                 break;
         }
     }
@@ -88,7 +102,8 @@ public class FactionsGui implements Listener {
         player.sendMessage("Successfully created faction.");
     }
 
-    private void openRequestGui () {
+    private void openRequestGui (Player player) {
+        respondRequest = true;
         player.closeInventory();
 
         Inventory requestInventory = Bukkit.createInventory(player, 9, "Requests");
@@ -100,11 +115,42 @@ public class FactionsGui implements Listener {
         final ItemMeta acceptItemMeta = acceptItem.getItemMeta();
         final ItemMeta declineItemMeta = declineItem.getItemMeta();
 
+        acceptItemMeta.setDisplayName("Accept requests.");
+        acceptItemMeta.setDisplayName("Decline Requests.");
+
         acceptItem.setItemMeta(acceptItemMeta);
         declineItem.setItemMeta(declineItemMeta);
 
         requestInventory.setItem(0, acceptItem);
         requestInventory.setItem(8, declineItem);
+    }
+
+    public void acceptRequestMessage (Player player) {
+        respondRequest = false;
+        acceptRequest = true;
+        player.sendMessage("Please enter one of the following names to accept: ");
+        Faction playerFaction = Factions.getFaction(Factions.getMemberFactionName(player.getUniqueId()));
+        for (String name : playerFaction.getRequests()) {
+            player.sendMessage(name);
+        }
+    }
+
+    public void declineRequestMessage (Player player) {
+        respondRequest = false;
+        acceptRequest = true;
+        player.sendMessage("Please enter one of the following names to decline: ");
+        Faction playerFaction = Factions.getFaction(Factions.getMemberFactionName(player.getUniqueId()));
+        for (String name : playerFaction.getRequests()) {
+            player.sendMessage(name);
+        }
+    }
+
+    public void acceptRequest (Player player, String name, AsyncPlayerChatEvent event) {
+        acceptRequest = false;
+    }
+
+    public void declineRequest (Player player, String name, AsyncPlayerChatEvent event) {
+        declineRequest = false;
     }
 
     private void joinFactionMessage(Player player) {
@@ -252,6 +298,8 @@ public class FactionsGui implements Listener {
     Player player;
     public static Player factionCreator = null;
     public static Player factionJoiner = null;
-    public static Player factionRequestResponder = null;
+    public boolean respondRequest = false;
+    public boolean acceptRequest = false;
+    public boolean declineRequest = false;
     private final Inventory inventory;
 }
