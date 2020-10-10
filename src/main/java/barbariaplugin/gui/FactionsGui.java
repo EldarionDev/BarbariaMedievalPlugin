@@ -114,7 +114,30 @@ public class FactionsGui implements Listener {
     }
 
     private void createMemberGui() {
+        final ItemStack seeProposalItem = new ItemStack(Material.BOOK, 1);
+        final ItemStack writeProposalItem = new ItemStack(Material.PAPER, 1);
+        final ItemStack leaveItem = new ItemStack(Material.IRON_DOOR, 1);
+        final ItemStack playerListItem = new ItemStack(Material.PLAYER_HEAD, 1);
 
+        final ItemMeta seeProposalItemMeta = seeProposalItem.getItemMeta();
+        final ItemMeta writeProposalItemMeta = writeProposalItem.getItemMeta();
+        final ItemMeta leaveItemMeta = leaveItem.getItemMeta();
+        final ItemMeta playerListItemMeta = playerListItem.getItemMeta();
+
+        seeProposalItemMeta.setDisplayName("See faction proposals!");
+        writeProposalItemMeta.setDisplayName("Write a faction proposal!");
+        leaveItemMeta.setDisplayName("Leave this faction!");
+        playerListItemMeta.setDisplayName("Send the player list.");
+
+        seeProposalItem.setItemMeta(seeProposalItemMeta);
+        writeProposalItem.setItemMeta(writeProposalItemMeta);
+        leaveItem.setItemMeta(leaveItemMeta);
+        playerListItem.setItemMeta(playerListItemMeta);
+
+        inventory.setItem(0, playerListItem);
+        inventory.setItem(7, writeProposalItem);
+        inventory.setItem(8, seeProposalItem);
+        inventory.setItem(9, leaveItem);
     }
 
     private void createLeaderGui() {
