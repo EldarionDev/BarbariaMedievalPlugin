@@ -126,6 +126,7 @@ public class FactionsGui implements Listener {
     }
 
     public void acceptRequestMessage (Player player) {
+        player.closeInventory();
         respondRequest = null;
         acceptRequest = player;
         player.sendMessage("Please enter one of the following names to accept: ");
@@ -133,6 +134,7 @@ public class FactionsGui implements Listener {
         List<String> names = playerFaction.getRequests();
         if (names == null) {
             player.sendMessage("There are no pending requests.");
+            acceptRequest = null;
         }
         for (String name : names) {
             player.sendMessage(name);
@@ -140,6 +142,7 @@ public class FactionsGui implements Listener {
     }
 
     public void declineRequestMessage (Player player) {
+        player.closeInventory();
         respondRequest = null;
         declineRequest = player;
         player.sendMessage("Please enter one of the following names to decline: ");
@@ -147,6 +150,7 @@ public class FactionsGui implements Listener {
         List<String> names = playerFaction.getRequests();
         if (names == null) {
             player.sendMessage("There are no pending requests.");
+            declineRequest = null;
         }
         for (String name : names) {
             player.sendMessage(name);
