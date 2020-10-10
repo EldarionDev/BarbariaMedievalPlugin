@@ -1,6 +1,7 @@
 package barbariaplugin.factions;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -70,6 +71,16 @@ public class Factions {
 
             }
         }
+    }
+
+    public static boolean checkFriendlyFire(Player attacker, Player defender) {
+        if (getMemberFactionName(attacker.getUniqueId()).equalsIgnoreCase(getMemberFactionName(defender.getUniqueId()))) {
+            if (getMemberFactionName(attacker.getUniqueId()).equalsIgnoreCase("")) {
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
 
     public static Faction getFaction(String name) {

@@ -1,10 +1,12 @@
 package barbariaplugin.events;
 
+import barbariaplugin.factions.Factions;
 import barbariaplugin.gui.FactionsGui;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -53,6 +55,15 @@ public class EventManager implements Listener {
         }
         else if (FactionsGui.declineRequest != null) {
             FactionsGui.declineRequest(event.getPlayer(), event.getMessage(), event);
+        }
+    }
+
+    @EventHandler
+    public void OnPlayerAttack(EntityDamageByEntityEvent event) {
+        if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
+            if (Factions.checkFriendlyFire((Player) event.getEntity(), (Player) event.getDamager())) {
+                event.setCancelled(true);
+            }
         }
     }
 
