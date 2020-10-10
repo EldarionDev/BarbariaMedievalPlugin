@@ -159,12 +159,12 @@ public class FactionsGui implements Listener {
         }
     }
 
-    public void acceptRequest (Player caller, String name, AsyncPlayerChatEvent event) {
-        acceptRequest = player;
+    public static void acceptRequest (Player caller, String name, AsyncPlayerChatEvent event) {
+        if (caller != acceptRequest) return;
     }
 
-    public void declineRequest (Player caller, String name, AsyncPlayerChatEvent event) {
-        declineRequest = player;
+    public static void declineRequest (Player caller, String name, AsyncPlayerChatEvent event) {
+        if (caller != declineRequest) return;
     }
 
     private void joinFactionMessage(Player player) {

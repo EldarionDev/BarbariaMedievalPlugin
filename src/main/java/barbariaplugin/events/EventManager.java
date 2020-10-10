@@ -48,6 +48,12 @@ public class EventManager implements Listener {
         else if (FactionsGui.factionJoiner != null) {
             FactionsGui.joinFaction(event.getPlayer(), event.getMessage(), event);
         }
+        else if (FactionsGui.acceptRequest != null) {
+            FactionsGui.acceptRequest(event.getPlayer(), event.getMessage(), event);
+        }
+        else if (FactionsGui.declineRequest != null) {
+            FactionsGui.declineRequest(event.getPlayer(), event.getMessage(), event);
+        }
     }
 
     @EventHandler
