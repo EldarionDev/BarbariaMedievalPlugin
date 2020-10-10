@@ -38,19 +38,37 @@ public class Factions {
         return true;
     }
 
-    public static boolean checkFactionJoin(UUID memberUUID) {
+    public static boolean checkPlayerInFaction(UUID memberUUID) {
         Iterator itM = factionMembers.entrySet().iterator();
         while (itM.hasNext()) {
             Map.Entry pair = (Map.Entry)itM.next();
             if (pair.getKey().equals(memberUUID)) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
+    }
+
+    public static boolean checkPlayerFactionLeader(UUID playerUUID, String name) {
+        if ((playerUUID.compareTo(factionLeaders.get(name))) == 0) {
+            return true;
+        }
+        return false;
     }
 
     public static UUID getFactionLeader(String name) {
         return factionLeaders.get(name);
+    }
+
+    public static String getMemberFactionName(UUID member) {
+        Iterator itM = factionMembers.entrySet().iterator();
+        while (itM.hasNext()) {
+            Map.Entry pair = (Map.Entry)itM.next();
+            if (pair.getKey().equals(member)) {
+                return pair.getValue().toString();
+            }
+        }
+        return "";
     }
 
     public static void setFactionLeader(String name, UUID factionLeaderUUID) {

@@ -1,6 +1,5 @@
 package barbariaplugin.gui;
 
-import barbariaplugin.factions.Faction;
 import barbariaplugin.factions.Factions;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -12,6 +11,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.UUID;
+
 public class FactionsGui implements Listener {
     public FactionsGui() {
         inventory = null;
@@ -19,8 +20,23 @@ public class FactionsGui implements Listener {
 
     public FactionsGui(Player caller) {
         player = caller;
+        UUID playerUUID = player.getUniqueId();
         inventory = Bukkit.createInventory(caller, 18, "Factions Menu");
-        this.createUserGui();
+
+        if (Factions.checkPlayerInFaction(playerUUID)) {
+            String factionName = Factions.getMemberFactionName(playerUUID);
+            if (factionName.equals("")) {
+                player.sendMessage("Could not get your faction.");
+                return;
+            }
+            if (Factions.checkPlayerFactionLeader(player.getUniqueId(), factionName)) {
+                this.createLeaderGui();
+            } else {
+                this.createMemberGui();
+            }
+        } else {
+            this.createUserGui();
+        }
         this.createCloseButton();
         caller.openInventory(inventory);
     }
