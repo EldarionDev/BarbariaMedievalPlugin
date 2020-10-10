@@ -1,5 +1,6 @@
 package barbariaplugin.factions;
 
+import org.bukkit.Bukkit;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -83,6 +84,7 @@ public class Factions {
 
     public static void addMember(String name, UUID member) {
         factionMembers.put(member, name);
+        Bukkit.getPlayer(member).sendMessage("You have been added successfully to: " + name);
     }
     
     public static List<String> getFactions() {

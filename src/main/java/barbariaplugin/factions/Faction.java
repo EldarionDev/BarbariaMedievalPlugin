@@ -75,5 +75,5 @@ public class Faction {
     }
 
     HashMap<String, UUID> requests = new HashMap<String, UUID>();
-    String factionName;
+    public String factionName;
 }
