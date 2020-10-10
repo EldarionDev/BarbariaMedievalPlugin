@@ -2,10 +2,10 @@ package barbariaplugin.factions;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -19,6 +19,32 @@ public class Factions {
     public static void load () {
         File dir = new File("factions/");
         dir.mkdirs();
+        File filesList[] = dir.listFiles();
+        for (File currentFile : filesList) {
+            String sepEnding[] = currentFile.getName().split("\\.");
+            String factionName = sepEnding[0];
+            JSONParser jsonParser = new JSONParser();
+            try {
+                JSONObject jsonObject = (JSONObject) jsonParser.parse(new FileReader(currentFile.getAbsolutePath().toString()));
+                String jsonLeader = (String) jsonObject.get("faction_leader");
+                JSONArray jsonMembers = (JSONArray) jsonObject.get("faction_members");
+                factionLeaders.put(factionName, UUID.fromString(jsonLeader));
+                factions.put(factionName, new Faction());
+                Iterator iterator  = jsonMembers.iterator();
+                while (iterator.hasNext()) {
+                    factionMembers.put(UUID.fromString(iterator.next().toString()), factionName);
+                }
+            }
+            catch (ParseException e) {
+
+            }
+            catch (FileNotFoundException e) {
+
+            }
+            catch (IOException e) {
+
+            }
+        }
     }
 
     public static void save () {
