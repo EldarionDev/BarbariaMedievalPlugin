@@ -59,6 +59,7 @@ public class Factions {
                 }
             }
             jsonObject.put("faction_members", members);
+            factions.get(pair.getKey().toString()).save(jsonObject);
             try {
                 FileWriter jsonFile = new FileWriter("factions/" + pair.getKey() + ".json");
                 jsonFile.write(jsonObject.toJSONString());

@@ -63,6 +63,7 @@ public class FactionsGui implements Listener {
         for (String current : available_factions) {
             if (current.equalsIgnoreCase(name)) {
                 player.sendMessage("Sent request to faction: " + current);
+                Factions.getFaction(current).addRequest(player);
                 factionJoiner = null;
                 return;
             }
