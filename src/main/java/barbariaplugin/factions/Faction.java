@@ -10,10 +10,7 @@ import org.json.simple.parser.ParseException;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class Faction {
     public Faction(String name) {
@@ -57,6 +54,24 @@ public class Faction {
 
     public void addRequest (Player player) {
         requests.put(player.getDisplayName(), player.getUniqueId());
+    }
+
+    public List<String> getRequests () {
+        List<String> returnList = null;
+        Iterator itR = requests.entrySet().iterator();
+        while (itR.hasNext()) {
+            Map.Entry pair = (Map.Entry) itR.next();
+            returnList.add(pair.getKey().toString());
+        }
+        return returnList;
+    }
+
+    public void acceptRequest (String playerName) {
+
+    }
+
+    public void declineRequest (String playerName) {
+
     }
 
     HashMap<String, UUID> requests = new HashMap<String, UUID>();

@@ -53,6 +53,9 @@ public class FactionsGui implements Listener {
             case OAK_DOOR:
                 this.joinFactionMessage(player);
                 break;
+            case ZOMBIE_HEAD:
+                this.openRequestGui();
+                break;
         }
     }
 
@@ -83,6 +86,25 @@ public class FactionsGui implements Listener {
         }
         Factions.addFaction(name, player.getUniqueId());
         player.sendMessage("Successfully created faction.");
+    }
+
+    private void openRequestGui () {
+        player.closeInventory();
+
+        Inventory requestInventory = Bukkit.createInventory(player, 9, "Requests");
+        player.openInventory(requestInventory);
+
+        final ItemStack acceptItem = new ItemStack(Material.GREEN_WOOL, 1);
+        final ItemStack declineItem = new ItemStack(Material.RED_WOOL, 1);
+
+        final ItemMeta acceptItemMeta = acceptItem.getItemMeta();
+        final ItemMeta declineItemMeta = declineItem.getItemMeta();
+
+        acceptItem.setItemMeta(acceptItemMeta);
+        declineItem.setItemMeta(declineItemMeta);
+
+        requestInventory.setItem(0, acceptItem);
+        requestInventory.setItem(8, declineItem);
     }
 
     private void joinFactionMessage(Player player) {
@@ -230,5 +252,6 @@ public class FactionsGui implements Listener {
     Player player;
     public static Player factionCreator = null;
     public static Player factionJoiner = null;
+    public static Player factionRequestResponder = null;
     private final Inventory inventory;
 }
