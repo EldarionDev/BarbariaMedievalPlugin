@@ -1,5 +1,7 @@
 package barbariaplugin.gui;
 
+import barbariaplugin.factions.Faction;
+import barbariaplugin.factions.Factions;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -49,6 +51,12 @@ public class FactionsGui implements Listener {
         event.setCancelled(true);
         player.sendMessage("You decided to create: " + name);
         factionCreator = null;
+        if (!Factions.checkFactionCreate(name, player.getUniqueId())) {
+            player.sendMessage("The faction could not be created.");
+            return;
+        }
+        Factions.addFaction(name, player.getUniqueId());
+        player.sendMessage("Successfully created faction.");
     }
 
     private void joinFactionMessage(Player player) {
