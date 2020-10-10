@@ -57,7 +57,7 @@ public class Faction {
     }
 
     public List<String> getRequests () {
-        List<String> returnList = null;
+        List<String> returnList = new ArrayList<String>();
         Iterator itR = requests.entrySet().iterator();
         while (itR.hasNext()) {
             Map.Entry pair = (Map.Entry) itR.next();
