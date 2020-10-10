@@ -141,7 +141,66 @@ public class FactionsGui implements Listener {
     }
 
     private void createLeaderGui() {
+        final ItemStack deleteFactionItem = new ItemStack(Material.BARRIER, 1);
+        final ItemStack deleteProposalItem = new ItemStack(Material.LAVA_BUCKET, 1);
+        final ItemStack playerListItem = new ItemStack(Material.PLAYER_HEAD, 1);
+        final ItemStack seeProposalsItem = new ItemStack(Material.BOOK, 1);
+        final ItemStack seeTradesItem = new ItemStack(Material.ENCHANTED_BOOK, 1);
+        final ItemStack makeProposalItem = new ItemStack(Material.PAPER, 1);
+        final ItemStack offerTradeItem = new ItemStack(Material.GOLD_INGOT, 1);
+        final ItemStack changeOwnerItem = new ItemStack(Material.DRAGON_HEAD, 1);
+        final ItemStack ceaseFireItem = new ItemStack(Material.SHIELD, 1);
+        final ItemStack declareWarItem = new ItemStack(Material.DIAMOND_SWORD, 1);
+        final ItemStack joinRequestsItem = new ItemStack(Material.ZOMBIE_HEAD, 1);
 
+        final ItemMeta deleteFactionItemMeta = deleteFactionItem.getItemMeta();
+        final ItemMeta deleteProposalItemMeta = deleteProposalItem.getItemMeta();
+        final ItemMeta playerListItemMeta = playerListItem.getItemMeta();
+        final ItemMeta seeProposalsItemMeta = seeProposalsItem.getItemMeta();
+        final ItemMeta seeTradesItemMeta = seeTradesItem.getItemMeta();
+        final ItemMeta makeProposalItemMeta = makeProposalItem.getItemMeta();
+        final ItemMeta offerTradeItemMeta = offerTradeItem.getItemMeta();
+        final ItemMeta changeOwnerItemMeta = changeOwnerItem.getItemMeta();
+        final ItemMeta ceaseFireItemMeta = ceaseFireItem.getItemMeta();
+        final ItemMeta declareWarItemMeta = declareWarItem.getItemMeta();
+        final ItemMeta joinRequestsItemMeta = joinRequestsItem.getItemMeta();
+        
+        deleteFactionItemMeta.setDisplayName("Delete your faction!");
+        deleteProposalItemMeta.setDisplayName("Delete a proposal to your faction!");
+        playerListItemMeta.setDisplayName("See a list of players of this faction!");
+        seeProposalsItemMeta.setDisplayName("See faction proposals!");
+        seeTradesItemMeta.setDisplayName("See faction trade agreements!");
+        makeProposalItemMeta.setDisplayName("Make a faction proposal!");
+        offerTradeItemMeta.setDisplayName("Offer a trade agreement.");
+        changeOwnerItemMeta.setDisplayName("Change the faction owner!");
+        ceaseFireItemMeta.setDisplayName("Cease fire with a faction!");
+        declareWarItemMeta.setDisplayName("Declare war to a faction!");
+        joinRequestsItemMeta.setDisplayName("See join requests!");
+
+        deleteFactionItem.setItemMeta(deleteFactionItemMeta);
+        deleteProposalItem.setItemMeta(deleteProposalItemMeta);
+        playerListItem.setItemMeta(playerListItemMeta);
+        seeProposalsItem.setItemMeta(seeProposalsItemMeta);
+        seeTradesItem.setItemMeta(seeTradesItemMeta);
+        makeProposalItem.setItemMeta(makeProposalItemMeta);
+        offerTradeItem.setItemMeta(offerTradeItemMeta);
+        changeOwnerItem.setItemMeta(changeOwnerItemMeta);
+        ceaseFireItem.setItemMeta(ceaseFireItemMeta);
+        declareWarItem.setItemMeta(declareWarItemMeta);
+        joinRequestsItem.setItemMeta(joinRequestsItemMeta);
+
+        inventory.setItem(16, deleteFactionItem);
+        inventory.setItem(15, deleteProposalItem);
+        inventory.setItem(0, playerListItem);
+        inventory.setItem(1, joinRequestsItem);
+        inventory.setItem(7, makeProposalItem);
+        inventory.setItem(8, seeProposalsItem);
+        inventory.setItem(4, offerTradeItem);
+        inventory.setItem(5, seeTradesItem);
+        inventory.setItem(9, declareWarItem);
+        inventory.setItem(10, ceaseFireItem);
+        inventory.setItem(12, changeOwnerItem);
+        inventory.setItem(13, joinRequestsItem);
     }
 
     private void createCloseButton() {
@@ -152,7 +211,6 @@ public class FactionsGui implements Listener {
         inventory.setItem(17, closeButton);
 
     }
-
 
     Player player;
     public static Player factionCreator = null;
