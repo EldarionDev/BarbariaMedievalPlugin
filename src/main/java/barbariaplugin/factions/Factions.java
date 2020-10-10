@@ -1,5 +1,10 @@
 package barbariaplugin.factions;
 
+import org.json.simple.JSONObject;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -8,6 +13,28 @@ import java.util.UUID;
 public class Factions {
     public Factions() {
 
+    }
+
+    public static void load () {
+        File dir = new File("factions/");
+        dir.mkdirs();
+    }
+
+    public static void save () {
+        Iterator itF = factions.entrySet().iterator();
+        while (itF.hasNext()) {
+            Map.Entry pair = (Map.Entry) itF.next();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("faction_leader", factionLeaders.get(pair.getKey()));
+            try {
+                FileWriter jsonFile = new FileWriter("factions/" + pair.getKey() + ".json");
+                jsonFile.write(jsonObject.toJSONString());
+                jsonFile.close();
+            }
+            catch (IOException e) {
+
+            }
+        }
     }
 
     public static Faction getFaction(String name) {
