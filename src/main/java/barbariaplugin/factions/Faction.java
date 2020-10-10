@@ -1,21 +1,46 @@
 package barbariaplugin.factions;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
 public class Faction {
-    public Faction() {
-
+    public Faction(String name) {
+        factionName = name;
+        load();
     }
 
-    public void load () {
+    private void load () {
+        JSONParser jsonParser = new JSONParser();
+        try {
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(new FileReader("factions/" + factionName + ".json"));
+            JSONArray jsonRequests = (JSONArray) jsonObject.get("requests");
+            Iterator iterator  = jsonRequests.iterator();
+            while (iterator.hasNext()) {
+                String myVar = iterator.next().toString();
+                requests.put(Bukkit.getPlayer(UUID.fromString(myVar)).getDisplayName(), UUID.fromString(myVar));
+            }
+        }
+        catch(FileNotFoundException e) {
 
+        }
+        catch(IOException e) {
+
+        }
+        catch(ParseException e) {
+
+        }
     }
 
     public void save (JSONObject object) {
@@ -34,5 +59,6 @@ public class Faction {
         requests.put(player.getDisplayName(), player.getUniqueId());
     }
 
-    static HashMap<String, UUID> requests = new HashMap<String, UUID>();
+    HashMap<String, UUID> requests = new HashMap<String, UUID>();
+    String factionName;
 }

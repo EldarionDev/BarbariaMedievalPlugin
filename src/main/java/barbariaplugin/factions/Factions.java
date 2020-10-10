@@ -26,7 +26,7 @@ public class Factions {
                 String jsonLeader = (String) jsonObject.get("faction_leader");
                 JSONArray jsonMembers = (JSONArray) jsonObject.get("faction_members");
                 factionLeaders.put(factionName, UUID.fromString(jsonLeader));
-                factions.put(factionName, new Faction());
+                factions.put(factionName, new Faction(factionName));
                 Iterator iterator  = jsonMembers.iterator();
                 while (iterator.hasNext()) {
                     factionMembers.put(UUID.fromString(iterator.next().toString()), factionName);
@@ -76,7 +76,7 @@ public class Factions {
     }
 
     public static void addFaction(String name, UUID factionLeaderUUID) {
-        factions.put(name, new Faction());
+        factions.put(name, new Faction(name));
         factionLeaders.put(name, factionLeaderUUID);
         factionMembers.put(factionLeaderUUID, name);
     }
