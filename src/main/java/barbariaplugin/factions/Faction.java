@@ -67,11 +67,11 @@ public class Faction {
     }
 
     public void acceptRequest (String playerName) {
-
+        requests.remove(playerName);
     }
 
     public void declineRequest (String playerName) {
-
+        requests.remove(playerName);
     }
 
     HashMap<String, UUID> requests = new HashMap<String, UUID>();

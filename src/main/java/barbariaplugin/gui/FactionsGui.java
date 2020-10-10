@@ -161,10 +161,23 @@ public class FactionsGui implements Listener {
 
     public static void acceptRequest (Player caller, String name, AsyncPlayerChatEvent event) {
         if (caller != acceptRequest) return;
+        Faction playerFaction = Factions.getFaction(Factions.getMemberFactionName(caller.getUniqueId()));
+        for (String a : playerFaction.getRequests()) {
+            if (a.equalsIgnoreCase(name)) {
+                playerFaction.acceptRequest(caller.getDisplayName());
+                Factions.addMember(Factions.getMemberFactionName(caller.getUniqueId()), caller.getUniqueId());
+            }
+        }
     }
 
     public static void declineRequest (Player caller, String name, AsyncPlayerChatEvent event) {
         if (caller != declineRequest) return;
+        Faction playerFaction = Factions.getFaction(Factions.getMemberFactionName(caller.getUniqueId()));
+        for (String a : playerFaction.getRequests()) {
+            if (a.equalsIgnoreCase(name)) {
+                playerFaction.declineRequest(caller.getDisplayName());
+            }
+        }
     }
 
     private void joinFactionMessage(Player player) {

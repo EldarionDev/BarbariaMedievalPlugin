@@ -80,6 +80,10 @@ public class Factions {
         factionLeaders.put(name, factionLeaderUUID);
         factionMembers.put(factionLeaderUUID, name);
     }
+
+    public static void addMember(String name, UUID member) {
+        factionMembers.put(member, name);
+    }
     
     public static List<String> getFactions() {
         List<String> faction_names = new ArrayList<String>();
