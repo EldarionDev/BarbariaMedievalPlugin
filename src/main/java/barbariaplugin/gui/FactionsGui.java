@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -28,22 +29,47 @@ public class FactionsGui implements Listener {
                 player.closeInventory();
                 break;
             case NETHER_STAR:
-                this.createFaction(player);
+                this.createFactionMessage(player);
                 break;
             case OAK_DOOR:
-                this.joinFaction(player);
+                this.joinFactionMessage(player);
                 break;
         }
     }
 
-    private void joinFaction(Player player) {
-        player.sendMessage(ChatColor.GOLD + "Congratulations, you have decided to join a faction!");
-        player.closeInventory();
+    public static void joinFaction(Player player, String name, AsyncPlayerChatEvent event) {
+        if (player != factionJoiner) return;
+        event.setCancelled(true);
+        player.sendMessage("You decided to join: " + name);
+        factionJoiner = null;
     }
 
-    private void createFaction(Player player) {
+    public static void createFaction(Player player, String name, AsyncPlayerChatEvent event) {
+        if (player != factionCreator) return;
+        event.setCancelled(true);
+        player.sendMessage("You decided to create: " + name);
+        factionCreator = null;
+    }
+
+    private void joinFactionMessage(Player player) {
+        player.sendMessage(ChatColor.GOLD + "Congratulations, you have decided to join a faction!");
+        player.closeInventory();
+        if (factionCreator != null || factionJoiner != null) {
+            player.sendMessage("Somebody else is attempting to interact with a faction at the moment. Please retry again soon.");
+            return;
+        }
+        factionJoiner = player;
+        player.sendMessage("Please enter the name of the faction you want to join");
+    }
+
+    private void createFactionMessage(Player player) {
         player.sendMessage(ChatColor.GOLD + "Congratulations, you have decided to create a faction!");
         player.closeInventory();
+        if (factionCreator != null || factionJoiner != null) {
+            player.sendMessage("Somebody else is attempting to interact with a faction at the moment. Please retry again soon.");
+        }
+        factionCreator = player;
+        player.sendMessage("Please enter the name of the faction you want to create.");
     }
 
     private void createUserGui() {
@@ -82,5 +108,7 @@ public class FactionsGui implements Listener {
 
 
     Player player;
+    public static Player factionCreator = null;
+    public static Player factionJoiner = null;
     private final Inventory inventory;
 }
