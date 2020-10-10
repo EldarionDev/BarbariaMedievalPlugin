@@ -11,6 +11,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.List;
 import java.util.UUID;
 
 public class FactionsGui implements Listener {
@@ -58,7 +59,15 @@ public class FactionsGui implements Listener {
     public static void joinFaction(Player player, String name, AsyncPlayerChatEvent event) {
         if (player != factionJoiner) return;
         event.setCancelled(true);
-        player.sendMessage("You decided to join: " + name);
+        List<String> available_factions = Factions.getFactions();
+        for (String current : available_factions) {
+            if (current.equalsIgnoreCase(name)) {
+                player.sendMessage("Sent request to faction: " + current);
+                factionJoiner = null;
+                return;
+            }
+        }
+        player.sendMessage("This faction is not available. Did you have a Typo?");
         factionJoiner = null;
     }
 
@@ -83,6 +92,11 @@ public class FactionsGui implements Listener {
             return;
         }
         factionJoiner = player;
+        player.sendMessage("A list of factions: ");
+        List<String> faction_choice = Factions.getFactions();
+        for (String currentFaction : faction_choice)  {
+            player.sendMessage(currentFaction);
+        }
         player.sendMessage("Please enter the name of the faction you want to join");
     }
 

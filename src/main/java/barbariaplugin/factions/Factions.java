@@ -6,10 +6,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class Factions {
     public Factions() {
@@ -81,6 +78,17 @@ public class Factions {
         factions.put(name, new Faction());
         factionLeaders.put(name, factionLeaderUUID);
         factionMembers.put(factionLeaderUUID, name);
+    }
+    
+    public static List<String> getFactions() {
+        List<String> faction_names = new ArrayList<String>();
+        Iterator itF = factions.entrySet().iterator();
+        int i = 0;
+        while (itF.hasNext()) {
+            Map.Entry pair = (Map.Entry) itF.next();
+            faction_names.add(pair.getKey().toString());
+        }
+        return faction_names;
     }
 
     public static boolean checkFactionCreate(String name, UUID factionLeaderUUID) {
