@@ -75,11 +75,17 @@ public class Faction {
     }
 
     public void addProposal (String proposal, UUID member) {
-
+        proposals.put(proposal, member);
     }
 
     public void removeProposal (UUID member) {
-
+        Iterator itP = proposals.entrySet().iterator();
+        while (itP.hasNext()) {
+            Map.Entry pair = (Map.Entry) itP.next();
+            if (pair.getValue().toString().equalsIgnoreCase(member.toString())) {
+                proposals.remove(pair.getKey());
+            }
+        }
     }
 
     public List<String> getProposals () {
