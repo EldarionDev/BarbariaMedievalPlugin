@@ -139,6 +139,9 @@ public class Factions {
     }
 
     public static boolean checkPlayerFactionLeader(UUID playerUUID, String name) {
+        if (playerUUID == null || factionLeaders == null) {
+            return false;
+        }
         if ((playerUUID.compareTo(factionLeaders.get(name))) == 0) {
             return true;
         }
@@ -184,7 +187,7 @@ public class Factions {
             Map.Entry pair = (Map.Entry) itM.next();
             if (pair.getValue().toString().equalsIgnoreCase(name)) {
                 factionMembers.remove(pair.getKey());
-                Bukkit.getServer().broadcastMessage("Faction: " + name + "got deleted.");
+                Bukkit.getServer().broadcastMessage("Faction: " + name + " got deleted.");
                 File factionFile = new File("factions/" + name + ".json");
                 factionFile.delete();
                 return;

@@ -217,6 +217,7 @@ public class FactionsGui implements Listener {
 
     public static void acceptRequest (Player caller, String name, AsyncPlayerChatEvent event) {
         if (caller != acceptRequest) return;
+        acceptRequest = null;
         event.setCancelled(true);
         Faction playerFaction = Factions.getFaction(Factions.getMemberFactionName(caller.getUniqueId()));
         for (String a : playerFaction.getRequests()) {
@@ -232,6 +233,7 @@ public class FactionsGui implements Listener {
 
     public static void declineRequest (Player caller, String name, AsyncPlayerChatEvent event) {
         if (caller != declineRequest) return;
+        declineRequest = null;
         Faction playerFaction = Factions.getFaction(Factions.getMemberFactionName(caller.getUniqueId()));
         for (String a : playerFaction.getRequests()) {
             if (a.equalsIgnoreCase(name)) {
