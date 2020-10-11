@@ -66,7 +66,16 @@ public class FactionsGui implements Listener {
             case IRON_DOOR:
                 Factions.removeMember(player.getUniqueId());
                 break;
-            default:
+            case BOOK:
+                player.sendMessage("Your faction proposals:");
+                List<String> proposals = Factions.getFaction(Factions.getMemberFactionName(player.getUniqueId())).getProposals();
+                if (proposals == null) {
+                    player.sendMessage("There are no open proposals.");
+                    return;
+                }
+                for (String proposal: proposals) {
+                    player.sendMessage(proposal);
+                }
                 break;
         }
     }
