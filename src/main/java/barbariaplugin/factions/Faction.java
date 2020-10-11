@@ -74,6 +74,27 @@ public class Faction {
         requests.remove(playerName);
     }
 
+    public void addProposal (String proposal, UUID member) {
+
+    }
+
+    public void removeProposal (UUID member) {
+
+    }
+
+    public List<String> getProposals () {
+        Iterator itP = proposals.entrySet().iterator();
+        List<String> proposals = new ArrayList<String>();
+        while (itP.hasNext()) {
+            Map.Entry pair = (Map.Entry) itP.next();
+            String playerName = Bukkit.getPlayer(UUID.fromString(pair.getValue().toString())).getDisplayName();
+            String msg = pair.getKey().toString();
+            proposals.add("Proposal from: " + playerName + "Proposal: " + msg);
+        }
+        return proposals;
+    }
+
     HashMap<String, UUID> requests = new HashMap<String, UUID>();
+    HashMap<String, UUID> proposals = new HashMap<String, UUID>();
     public String factionName;
 }
