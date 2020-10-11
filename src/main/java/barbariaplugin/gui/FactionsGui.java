@@ -107,6 +107,7 @@ public class FactionsGui implements Listener {
         for (String proposal: proposals) {
             player.sendMessage(proposal);
         }
+        player.closeInventory();
     }
 
     private void sendPlayerList(Player player) {
@@ -253,7 +254,6 @@ public class FactionsGui implements Listener {
             player.sendMessage(currentFaction);
         }
         player.sendMessage("Please enter the name of the faction you want to join");
-        player.closeInventory();
     }
 
     private void createFactionMessage(Player player) {
@@ -264,7 +264,6 @@ public class FactionsGui implements Listener {
         }
         factionCreator = player;
         player.sendMessage("Please enter the name of the faction you want to create.");
-        player.closeInventory();
     }
 
     private void createUserGui() {
