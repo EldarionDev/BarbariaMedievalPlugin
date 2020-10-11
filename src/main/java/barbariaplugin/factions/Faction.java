@@ -114,7 +114,7 @@ public class Faction {
             Map.Entry pair = (Map.Entry) itP.next();
             String playerName = Bukkit.getPlayer(UUID.fromString(pair.getValue().toString())).getDisplayName();
             String msg = pair.getKey().toString();
-            proposals.add("Proposal from: " + playerName + "Proposal: " + msg);
+            proposals.add("Proposal from: " + playerName + " Proposal: " + msg);
         }
         return proposals;
     }
