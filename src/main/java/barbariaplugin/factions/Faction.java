@@ -43,13 +43,23 @@ public class Faction {
     public void save (JSONObject object) {
         JSONObject returnObject;
         JSONArray requests_array = new JSONArray();
+        JSONArray proposer_array = new JSONArray();
+        JSONArray proposals_array = new JSONArray();
         Iterator itR = requests.entrySet().iterator();
         while (itR.hasNext()) {
             Map.Entry pair = (Map.Entry) itR.next();
             requests_array.add(pair.getValue().toString());
         }
+        Iterator itP = proposals.entrySet().iterator();
+        while (itP.hasNext()) {
+            Map.Entry pair = (Map.Entry) itP.next();
+            proposer_array.add(pair.getValue().toString());
+            proposals_array.add(pair.getKey().toString());
+        }
         returnObject = object;
         returnObject.put("requests", requests_array);
+        returnObject.put("proposers", proposer_array);
+        returnObject.put("proposals", proposals_array);
     }
 
     public void addRequest (Player player) {
