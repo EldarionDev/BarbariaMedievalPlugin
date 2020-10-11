@@ -60,6 +60,9 @@ public class EventManager implements Listener {
         else if (FactionsGui.proposalSender != null) {
             FactionsGui.applyProposal(event.getPlayer(), event.getMessage(), event);
         }
+        else if (FactionsGui.proposalDeletor != null) {
+            FactionsGui.deleteProposal(event.getPlayer(), event.getMessage(), event);
+        }
     }
 
     @EventHandler

@@ -68,20 +68,26 @@ public class FactionsGui implements Listener {
                 break;
             case BOOK:
                 player.sendMessage("Your faction proposals:");
-                List<String> proposals = Factions.getFaction(Factions.getMemberFactionName(player.getUniqueId())).getProposals();
-                if (proposals == null) {
-                    player.sendMessage("There are no open proposals.");
-                    return;
-                }
-                for (String proposal: proposals) {
-                    player.sendMessage(proposal);
-                }
+                this.listProposalsMessage(player);
                 break;
             case PAPER:
                 player.sendMessage("Please enter your proposal.");
                 proposalSender = player;
                 break;
+            case LAVA_BUCKET:
+                player.sendMessage("Please enter the Name of the player whose proposal you want to delete");
+                this.listProposalsMessage(player);
+                proposalDeletor = player;
+                break;
         }
+    }
+    
+    public static void deleteProposal (Player player, String name, AsyncPlayerChatEvent event) {
+        if (player != proposalDeletor) return;
+        event.setCancelled(true);
+        Faction f = Factions.getFaction(Factions.getMemberFactionName(player.getUniqueId()));
+        f.removeProposal(Bukkit.getPlayer(name).getUniqueId());
+        proposalDeletor = null;
     }
 
     public static void applyProposal (Player player, String name, AsyncPlayerChatEvent event) {
@@ -90,6 +96,17 @@ public class FactionsGui implements Listener {
         Faction f = Factions.getFaction(Factions.getMemberFactionName(player.getUniqueId()));
         f.addProposal(name, player.getUniqueId());
         proposalSender = null;
+    }
+    
+    public void listProposalsMessage (Player player) {
+        List<String> proposals = Factions.getFaction(Factions.getMemberFactionName(player.getUniqueId())).getProposals();
+        if (proposals == null) {
+            player.sendMessage("There are no open proposals.");
+            return;
+        }
+        for (String proposal: proposals) {
+            player.sendMessage(proposal);
+        }
     }
 
     private void sendPlayerList(Player player) {
@@ -371,5 +388,6 @@ public class FactionsGui implements Listener {
     public static Player acceptRequest = null;
     public static Player declineRequest = null;
     public static Player proposalSender = null;
+    public static Player proposalDeletor = null;
     private final Inventory inventory;
 }
