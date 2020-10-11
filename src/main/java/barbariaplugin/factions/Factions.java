@@ -176,6 +176,34 @@ public class Factions {
         factionLeaders.replace(name, factionLeaderUUID);
     }
 
+    public static void deleteFaction (String name) {
+        factions.remove(name);
+        factionLeaders.remove(name);
+        Iterator itM = factionMembers.entrySet().iterator();
+        while (itM.hasNext()) {
+            Map.Entry pair = (Map.Entry) itM.next();
+            if (pair.getValue().toString().equalsIgnoreCase(name)) {
+                factionMembers.remove(pair.getKey());
+            }
+        }
+        Bukkit.getServer().broadcastMessage("Faction: " + name + "got deleted.");
+        File factionFile = new File("factions/" + name + ".json");
+        factionFile.delete();
+    }
+
+    public static void removeMember (UUID member) {
+        String factionName = new String("");
+        Iterator itM = factionMembers.entrySet().iterator();
+        while (itM.hasNext()) {
+            Map.Entry pair  = (Map.Entry) itM.next();
+            if (pair.getKey().toString().equalsIgnoreCase(member.toString())) {
+                factionMembers.remove(pair.getKey());
+                factionName = pair.getValue().toString();
+            }
+        }
+        Bukkit.getPlayer(member).sendMessage("Successfully removed you from: " + factionName);
+    }
+
     static HashMap<String, Faction> factions = new HashMap<String, Faction>();
     static HashMap<String, UUID> factionLeaders = new HashMap<String, UUID>();
     static HashMap<UUID, String> factionMembers = new HashMap<UUID, String>();

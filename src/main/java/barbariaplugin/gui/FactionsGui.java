@@ -60,6 +60,12 @@ public class FactionsGui implements Listener {
             case PLAYER_HEAD:
                 this.sendPlayerList(player);
                 break;
+            case BARRIER:
+                Factions.deleteFaction(Factions.getMemberFactionName(player.getUniqueId()));
+                break;
+            case IRON_DOOR:
+                Factions.removeMember(player.getUniqueId());
+                break;
             default:
                 break;
         }
