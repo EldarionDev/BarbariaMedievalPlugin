@@ -75,11 +75,22 @@ public class FactionsGui implements Listener {
                 proposalSender = player;
                 break;
             case LAVA_BUCKET:
-                player.sendMessage("Please enter the Name of the player whose proposal you want to delete");
+                player.sendMessage("Please enter the name of the player whose proposal you want to delete");
                 this.listProposalsMessage(player);
                 proposalDeletor = player;
                 break;
+            case DRAGON_HEAD:
+                ownerChanger = player;
+                player.sendMessage("Please enter the name of the player you want to be faction leader.");
+                break;
         }
+    }
+
+    public static void changeOwner (Player player, String name, AsyncPlayerChatEvent event) {
+        if (player != ownerChanger) return;
+        event.setCancelled(true);
+        Factions.setFactionLeader(Factions.getMemberFactionName(player.getUniqueId()), Bukkit.getPlayer(name).getUniqueId());
+        ownerChanger = null;
     }
     
     public static void deleteProposal (Player player, String name, AsyncPlayerChatEvent event) {
@@ -392,5 +403,6 @@ public class FactionsGui implements Listener {
     public static Player declineRequest = null;
     public static Player proposalSender = null;
     public static Player proposalDeletor = null;
+    public static Player ownerChanger = null;
     private final Inventory inventory;
 }
