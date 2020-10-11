@@ -77,7 +77,19 @@ public class FactionsGui implements Listener {
                     player.sendMessage(proposal);
                 }
                 break;
+            case PAPER:
+                player.sendMessage("Please enter your proposal.");
+                proposalSender = player;
+                break;
         }
+    }
+
+    public static void applyProposal (Player player, String name, AsyncPlayerChatEvent event) {
+        if (player != proposalSender) return;
+        event.setCancelled(true);
+        Faction f = Factions.getFaction(Factions.getMemberFactionName(player.getUniqueId()));
+        f.addProposal(name, player.getUniqueId());
+        proposalSender = null;
     }
 
     private void sendPlayerList(Player player) {
@@ -358,5 +370,6 @@ public class FactionsGui implements Listener {
     public static Player respondRequest = null;
     public static Player acceptRequest = null;
     public static Player declineRequest = null;
+    public static Player proposalSender = null;
     private final Inventory inventory;
 }

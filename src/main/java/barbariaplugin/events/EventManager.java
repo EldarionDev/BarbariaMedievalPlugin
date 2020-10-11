@@ -1,5 +1,6 @@
 package barbariaplugin.events;
 
+import barbariaplugin.factions.Faction;
 import barbariaplugin.factions.Factions;
 import barbariaplugin.gui.FactionsGui;
 import org.bukkit.Material;
@@ -55,6 +56,9 @@ public class EventManager implements Listener {
         }
         else if (FactionsGui.declineRequest != null) {
             FactionsGui.declineRequest(event.getPlayer(), event.getMessage(), event);
+        }
+        else if (FactionsGui.proposalSender != null) {
+            FactionsGui.applyProposal(event.getPlayer(), event.getMessage(), event);
         }
     }
 
