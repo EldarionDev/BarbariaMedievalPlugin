@@ -23,10 +23,19 @@ public class Faction {
         try {
             JSONObject jsonObject = (JSONObject) jsonParser.parse(new FileReader("factions/" + factionName + ".json"));
             JSONArray jsonRequests = (JSONArray) jsonObject.get("requests");
+            JSONArray jsonProposers = (JSONArray) jsonObject.get("proposers");
+            JSONArray jsonProposals = (JSONArray) jsonObject.get("proposals");
             Iterator iterator  = jsonRequests.iterator();
             while (iterator.hasNext()) {
                 String myVar = iterator.next().toString();
                 requests.put(Bukkit.getPlayer(UUID.fromString(myVar)).getDisplayName(), UUID.fromString(myVar));
+            }
+            Iterator iterator1 = jsonProposers.iterator();
+            Iterator iterator2 = jsonProposals.iterator();
+            while (iterator1.hasNext()) {
+                UUID proposer = UUID.fromString(iterator1.next().toString());
+                String proposal = iterator2.next().toString();
+                proposals.put(proposal, proposer);
             }
         }
         catch(FileNotFoundException e) {
