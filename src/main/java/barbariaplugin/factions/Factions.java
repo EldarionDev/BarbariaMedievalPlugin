@@ -176,7 +176,7 @@ public class Factions {
         factionLeaders.replace(name, factionLeaderUUID);
     }
 
-    public static void deleteFaction (String name) {
+    public static void deleteFaction (String name, UUID leader) {
         factions.remove(name);
         factionLeaders.remove(name);
         Iterator itM = factionMembers.entrySet().iterator();
@@ -184,11 +184,13 @@ public class Factions {
             Map.Entry pair = (Map.Entry) itM.next();
             if (pair.getValue().toString().equalsIgnoreCase(name)) {
                 factionMembers.remove(pair.getKey());
+                Bukkit.getServer().broadcastMessage("Faction: " + name + "got deleted.");
+                File factionFile = new File("factions/" + name + ".json");
+                factionFile.delete();
+                return;
             }
         }
-        Bukkit.getServer().broadcastMessage("Faction: " + name + "got deleted.");
-        File factionFile = new File("factions/" + name + ".json");
-        factionFile.delete();
+        Bukkit.getPlayer(leader).sendMessage("Could not remove you from: " + name);
     }
 
     public static void removeMember (UUID member) {
@@ -199,9 +201,11 @@ public class Factions {
             if (pair.getKey().toString().equalsIgnoreCase(member.toString())) {
                 factionMembers.remove(pair.getKey());
                 factionName = pair.getValue().toString();
+                Bukkit.getPlayer(member).sendMessage("Successfully removed you from: " + factionName);
+                return;
             }
         }
-        Bukkit.getPlayer(member).sendMessage("Successfully removed you from: " + factionName);
+        Bukkit.getPlayer(member).sendMessage("Could not remove you from: " + factionName);
     }
 
     static HashMap<String, Faction> factions = new HashMap<String, Faction>();
