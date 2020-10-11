@@ -1,6 +1,5 @@
 package barbariaplugin.events;
 
-import barbariaplugin.factions.Faction;
 import barbariaplugin.factions.Factions;
 import barbariaplugin.gui.FactionsGui;
 import org.bukkit.Material;

@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class FactionsGui implements Listener {
@@ -88,9 +89,10 @@ public class FactionsGui implements Listener {
 
     public static void changeOwner (Player player, String name, AsyncPlayerChatEvent event) {
         if (player != ownerChanger) return;
-        event.setCancelled(true);
-        Factions.setFactionLeader(Factions.getMemberFactionName(player.getUniqueId()), Bukkit.getPlayer(name).getUniqueId());
         ownerChanger = null;
+        event.setCancelled(true);
+        UUID newFactionLeader = Objects.requireNonNull(Bukkit.getPlayer(name)).getUniqueId();
+        Factions.setFactionLeader(Factions.getMemberFactionName(player.getUniqueId()), newFactionLeader);
     }
     
     public static void deleteProposal (Player player, String name, AsyncPlayerChatEvent event) {

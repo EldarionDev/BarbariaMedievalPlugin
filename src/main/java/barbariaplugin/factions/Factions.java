@@ -176,8 +176,14 @@ public class Factions {
     }
 
     public static void setFactionLeader(String name, UUID factionLeaderUUID) {
-        factionLeaders.replace(name, factionLeaderUUID);
-        Bukkit.getPlayer(factionLeaderUUID).sendMessage("You are now faction leader of: " + name);
+        Iterator itL = factionLeaders.entrySet().iterator();
+        while (itL.hasNext()) {
+            Map.Entry pair = (Map.Entry) itL.next();
+            if (pair.getKey().toString().equalsIgnoreCase(name)) {
+                factionLeaders.replace(pair.getKey().toString(), factionLeaderUUID);
+                Bukkit.getPlayer(factionLeaderUUID).sendMessage("You are now faction leader of: " + name);
+            }
+        }
     }
 
     public static void deleteFaction (String name, UUID leader) {
