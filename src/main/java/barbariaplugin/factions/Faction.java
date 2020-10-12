@@ -149,10 +149,14 @@ public class Faction {
         this.aggression += aggression;
     }
 
+    public String getFactionName () {
+        return factionName;
+    }
+
     HashMap<String, UUID> requests = new HashMap<String, UUID>();
     HashMap<String, UUID> proposals = new HashMap<String, UUID>();
     public String factionName;
-    float trustworthy;
-    float loyalty;
-    float aggression;
+    float trustworthy = 0;
+    float loyalty = 0;
+    float aggression = 0;
 }

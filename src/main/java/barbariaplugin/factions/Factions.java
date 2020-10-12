@@ -98,7 +98,7 @@ public class Factions {
         Bukkit.getPlayer(member).sendMessage("You have been added successfully to: " + name);
     }
     
-    public static List<String> getFactions() {
+    public static List<String> getFactionNames() {
         List<String> faction_names = new ArrayList<String>();
         Iterator itF = factions.entrySet().iterator();
         int i = 0;
@@ -107,6 +107,16 @@ public class Factions {
             faction_names.add(pair.getKey().toString());
         }
         return faction_names;
+    }
+
+    public static List<Faction> getFactions () {
+        List<Faction> return_list = new ArrayList<Faction>();
+        Iterator itF = factions.entrySet().iterator();
+        while (itF.hasNext()) {
+            Map.Entry pair = (Map.Entry) itF.next();
+            return_list.add((Faction) pair.getValue());
+        }
+        return return_list;
     }
 
     public static boolean checkFactionCreate(String name, UUID factionLeaderUUID) {

@@ -85,6 +85,20 @@ public class FactionsGui implements Listener {
                 ownerChanger = player;
                 player.sendMessage("Please enter the name of the player you want to be faction leader.");
                 break;
+            case SPRUCE_SIGN:
+                printStatsMessage(player);
+                break;
+        }
+    }
+
+    public static void printStatsMessage (Player player) {
+        List <Faction> factions = Factions.getFactions();
+        player.closeInventory();
+        for (Faction f : factions) {
+            player.sendMessage(ChatColor.BLACK + "Faction name: " + f.getFactionName());
+            player.sendMessage("Trustworthy: " + f.getTrustworthy());
+            player.sendMessage("Loyalty: " + f.getLoyalty());
+            player.sendMessage("Aggression: " + f.getAggression());
         }
     }
 
@@ -146,7 +160,7 @@ public class FactionsGui implements Listener {
     public static void joinFaction(Player player, String name, AsyncPlayerChatEvent event) {
         if (player != factionJoiner) return;
         event.setCancelled(true);
-        List<String> available_factions = Factions.getFactions();
+        List<String> available_factions = Factions.getFactionNames();
         for (String current : available_factions) {
             if (current.equalsIgnoreCase(name)) {
                 player.sendMessage("Sent request to faction: " + current);
@@ -265,7 +279,7 @@ public class FactionsGui implements Listener {
         }
         factionJoiner = player;
         player.sendMessage("A list of factions: ");
-        List<String> faction_choice = Factions.getFactions();
+        List<String> faction_choice = Factions.getFactionNames();
         for (String currentFaction : faction_choice)  {
             player.sendMessage(currentFaction);
         }
