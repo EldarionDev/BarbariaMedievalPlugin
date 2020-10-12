@@ -25,6 +25,9 @@ public class Faction {
             JSONArray jsonRequests = (JSONArray) jsonObject.get("requests");
             JSONArray jsonProposers = (JSONArray) jsonObject.get("proposers");
             JSONArray jsonProposals = (JSONArray) jsonObject.get("proposals");
+            this.trustworthy = (float) jsonObject.get("trustworthy");
+            this.aggression = (float) jsonObject.get("aggression");
+            this.loyalty = (float) jsonObject.get("loyalty");
             Iterator iterator  = jsonRequests.iterator();
             while (iterator.hasNext()) {
                 String myVar = iterator.next().toString();
@@ -69,6 +72,9 @@ public class Faction {
         returnObject.put("requests", requests_array);
         returnObject.put("proposers", proposer_array);
         returnObject.put("proposals", proposals_array);
+        returnObject.put("trustworthy", this.trustworthy);
+        returnObject.put("loyalty", this.loyalty);
+        returnObject.put("aggression", this.aggression);
     }
 
     public void addRequest (Player player) {
