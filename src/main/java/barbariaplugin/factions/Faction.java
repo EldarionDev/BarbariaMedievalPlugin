@@ -119,7 +119,34 @@ public class Faction {
         return proposals;
     }
 
+    public float getTrustworthy () {
+        return this.trustworthy;
+    }
+
+    public float getLoyalty () {
+        return this.loyalty;
+    }
+
+    public float getAggression () {
+        return this.aggression;
+    }
+
+    public void addTrustworthy (float value) {
+        this.trustworthy += value;
+    }
+
+    public void addLoyalty (float value) {
+        this.loyalty += loyalty;
+    }
+
+    public void addAggression (float value) {
+        this.aggression += aggression;
+    }
+
     HashMap<String, UUID> requests = new HashMap<String, UUID>();
     HashMap<String, UUID> proposals = new HashMap<String, UUID>();
     public String factionName;
+    float trustworthy;
+    float loyalty;
+    float aggression;
 }
