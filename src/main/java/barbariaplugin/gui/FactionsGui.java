@@ -67,6 +67,7 @@ public class FactionsGui implements Listener {
                 break;
             case IRON_DOOR:
                 Factions.removeMember(player.getUniqueId());
+                Factions.getFaction(Factions.getMemberFactionName(player.getUniqueId())).addLoyalty(-5.0f);
                 break;
             case BOOK:
                 player.sendMessage("Your faction proposals:");

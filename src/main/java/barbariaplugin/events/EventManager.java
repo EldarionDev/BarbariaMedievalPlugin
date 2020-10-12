@@ -73,6 +73,9 @@ public class EventManager implements Listener {
             if (Factions.checkFriendlyFire((Player) event.getEntity(), (Player) event.getDamager())) {
                 event.setCancelled(true);
             }
+            else {
+                Factions.getFaction(Factions.getMemberFactionName(event.getEntity().getUniqueId())).addAggression(5.0f);
+            }
         }
     }
 
