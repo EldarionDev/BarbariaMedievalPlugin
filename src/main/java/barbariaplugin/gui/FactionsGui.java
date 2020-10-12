@@ -41,6 +41,7 @@ public class FactionsGui implements Listener {
             this.createUserGui();
         }
         this.createCloseButton();
+        this.createStatsButton();
         caller.openInventory(inventory);
     }
 
@@ -377,7 +378,6 @@ public class FactionsGui implements Listener {
         inventory.setItem(16, deleteFactionItem);
         inventory.setItem(15, deleteProposalItem);
         inventory.setItem(0, playerListItem);
-        inventory.setItem(1, joinRequestsItem);
         inventory.setItem(7, makeProposalItem);
         inventory.setItem(8, seeProposalsItem);
         inventory.setItem(3, offerTradeItem);
@@ -388,13 +388,20 @@ public class FactionsGui implements Listener {
         inventory.setItem(13, joinRequestsItem);
     }
 
-    private void createCloseButton() {
+    private void createCloseButton () {
         final ItemStack closeButton = new ItemStack(Material.RED_WOOL, 1);
         final ItemMeta closeButtonMeta = closeButton.getItemMeta();
         closeButtonMeta.setDisplayName("Close this GUI.");
         closeButton.setItemMeta(closeButtonMeta);
         inventory.setItem(17, closeButton);
+    }
 
+    public void createStatsButton () {
+        final ItemStack statsButton = new ItemStack(Material.SPRUCE_SIGN, 1);
+        final ItemMeta statsButtonMeta = statsButton.getItemMeta();
+        statsButtonMeta.setDisplayName("Get the stats of all factions.");
+        statsButton.setItemMeta(statsButtonMeta);
+        inventory.setItem(1, statsButton);
     }
 
     Player player;
