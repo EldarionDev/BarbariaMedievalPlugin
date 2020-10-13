@@ -25,6 +25,8 @@ public class Faction {
             JSONArray jsonRequests = (JSONArray) jsonObject.get("requests");
             JSONArray jsonProposers = (JSONArray) jsonObject.get("proposers");
             JSONArray jsonProposals = (JSONArray) jsonObject.get("proposals");
+            JSONArray jsonAtWar = (JSONArray) jsonObject.get("at_war");
+            JSONArray jsonNAP = (JSONArray) jsonObject.get("nap");
             this.trustworthy = (double) jsonObject.get("trustworthy");
             this.aggression = (double) jsonObject.get("aggression");
             this.loyalty = (double) jsonObject.get("loyalty");
@@ -39,6 +41,16 @@ public class Faction {
                 UUID proposer = UUID.fromString(iterator1.next().toString());
                 String proposal = iterator2.next().toString();
                 proposals.put(proposal, proposer);
+            }
+            Iterator iterator4 = jsonAtWar.iterator();
+            while (iterator4.hasNext()) {
+                String currentF = iterator4.next().toString();
+                factionsAtWar.add(currentF);
+            }
+            Iterator iterator5 = jsonNAP.iterator();
+            while (iterator5.hasNext()) {
+                String currentF = iterator5.next().toString();
+                factionsNAP.add(currentF);
             }
         }
         catch(FileNotFoundException e) {
@@ -57,6 +69,8 @@ public class Faction {
         JSONArray requests_array = new JSONArray();
         JSONArray proposer_array = new JSONArray();
         JSONArray proposals_array = new JSONArray();
+        JSONArray factions_at_war_array = new JSONArray();
+        JSONArray factions_nap_array = new JSONArray();
         Iterator itR = requests.entrySet().iterator();
         while (itR.hasNext()) {
             Map.Entry pair = (Map.Entry) itR.next();
@@ -68,6 +82,12 @@ public class Faction {
             proposer_array.add(pair.getValue().toString());
             proposals_array.add(pair.getKey().toString());
         }
+        for (String f1 : factionsAtWar) {
+            factions_at_war_array.add(f1);
+        }
+        for (String f2 : factionsNAP) {
+            factions_nap_array.add(f2);
+        }
         returnObject = object;
         returnObject.put("requests", requests_array);
         returnObject.put("proposers", proposer_array);
@@ -75,6 +95,8 @@ public class Faction {
         returnObject.put("trustworthy", this.trustworthy);
         returnObject.put("loyalty", this.loyalty);
         returnObject.put("aggression", this.aggression);
+        returnObject.put("at_war", factions_at_war_array);
+        returnObject.put("nap", factions_nap_array);
     }
 
     public void addRequest (Player player) {
