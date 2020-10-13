@@ -1,4 +1,4 @@
-package barbariaplugin.factions;
+package com.eldarion.barbariaplugin.factions;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -25,9 +25,9 @@ public class Faction {
             JSONArray jsonRequests = (JSONArray) jsonObject.get("requests");
             JSONArray jsonProposers = (JSONArray) jsonObject.get("proposers");
             JSONArray jsonProposals = (JSONArray) jsonObject.get("proposals");
-            this.trustworthy = (float) jsonObject.get("trustworthy");
-            this.aggression = (float) jsonObject.get("aggression");
-            this.loyalty = (float) jsonObject.get("loyalty");
+            this.trustworthy = (double) jsonObject.get("trustworthy");
+            this.aggression = (double) jsonObject.get("aggression");
+            this.loyalty = (double) jsonObject.get("loyalty");
             Iterator iterator  = jsonRequests.iterator();
             while (iterator.hasNext()) {
                 String myVar = iterator.next().toString();
@@ -125,15 +125,15 @@ public class Faction {
         return proposals;
     }
 
-    public float getTrustworthy () {
+    public double getTrustworthy () {
         return this.trustworthy;
     }
 
-    public float getLoyalty () {
+    public double getLoyalty () {
         return this.loyalty;
     }
 
-    public float getAggression () {
+    public double getAggression () {
         return this.aggression;
     }
 
@@ -153,10 +153,36 @@ public class Faction {
         return factionName;
     }
 
+    public boolean getFactionAtWar (String name) {
+        if (factionsAtWar.isEmpty()) return false;
+        for (String f : factionsAtWar) {
+            if (name.equalsIgnoreCase(f)) return true;
+        }
+        return false;
+    }
+
+    public void addFactionAtWar (String name) {
+        factionsAtWar.add(name);
+    }
+
+    public boolean getFactionNAP (String name) {
+        if (factionsNAP.isEmpty()) return false;
+        for (String f : factionsNAP) {
+            if (name.equalsIgnoreCase(f)) return true;
+        }
+        return false;
+    }
+
+    public void addFactionNAP (String name) {
+        factionsNAP.add(name);
+    }
+
     HashMap<String, UUID> requests = new HashMap<String, UUID>();
     HashMap<String, UUID> proposals = new HashMap<String, UUID>();
+    List<String> factionsAtWar = new ArrayList<String>();
+    List<String> factionsNAP = new ArrayList<String>();
     public String factionName;
-    float trustworthy = 0;
-    float loyalty = 0;
-    float aggression = 0;
+    double trustworthy = 0;
+    double loyalty = 0;
+    double aggression = 0;
 }

@@ -1,6 +1,6 @@
 name: Barbariaplugin
 version: ${project.version}
-main: barbariaplugin.barbariaplugin.Barbariaplugin
+main: barbariaplugin.Barbariaplugin
 api-version: 1.15
 authors: [ Eldarion ]
 description: The official Barbaria plugin by EldarionDev.

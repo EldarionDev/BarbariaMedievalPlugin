@@ -1,7 +1,7 @@
-package barbariaplugin.events;
+package com.eldarion.barbariaplugin.events;
 
-import barbariaplugin.factions.Factions;
-import barbariaplugin.gui.FactionsGui;
+import com.eldarion.barbariaplugin.factions.Factions;
+import com.eldarion.barbariaplugin.gui.FactionsGui;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

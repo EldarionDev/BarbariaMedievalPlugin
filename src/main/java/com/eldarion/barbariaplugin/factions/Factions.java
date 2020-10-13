@@ -1,4 +1,4 @@
-package barbariaplugin.factions;
+package com.eldarion.barbariaplugin.factions;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -11,9 +11,6 @@ import java.io.*;
 import java.util.*;
 
 public class Factions {
-    public Factions() {
-
-    }
 
     public static void load () {
         File dir = new File("factions/");

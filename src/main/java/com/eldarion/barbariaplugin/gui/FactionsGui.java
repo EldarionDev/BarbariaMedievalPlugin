@@ -1,7 +1,7 @@
-package barbariaplugin.gui;
+package com.eldarion.barbariaplugin.gui;
 
-import barbariaplugin.factions.Faction;
-import barbariaplugin.factions.Factions;
+import com.eldarion.barbariaplugin.factions.Faction;
+import com.eldarion.barbariaplugin.factions.Factions;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -88,6 +88,10 @@ public class FactionsGui implements Listener {
                 break;
             case SPRUCE_SIGN:
                 printStatsMessage(player);
+                break;
+            case SHIELD:
+                break;
+            case DIAMOND_SWORD:
                 break;
         }
     }

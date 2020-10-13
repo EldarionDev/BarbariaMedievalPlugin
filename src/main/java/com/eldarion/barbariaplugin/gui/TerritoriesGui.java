@@ -1,4 +1,4 @@
-package barbariaplugin.gui;
+package com.eldarion.barbariaplugin.gui;
 
 import org.bukkit.entity.Player;
 
