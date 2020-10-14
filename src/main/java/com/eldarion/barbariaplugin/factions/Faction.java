@@ -192,11 +192,17 @@ public class Faction {
     }
 
     public void stopWar (String name) {
+        String del = "";
         for (String f : factionsAtWar) {
             if (f.equalsIgnoreCase(name)) {
-                factionsAtWar.remove(f);
+                del = f;
+                break;
             }
         }
+        if (del.equals("")) {
+            return;
+        }
+        factionsAtWar.remove(del);
     }
 
     public boolean getFactionNAP (String name) {
