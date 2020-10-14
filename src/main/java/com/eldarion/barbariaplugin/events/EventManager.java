@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -79,8 +80,20 @@ public class EventManager implements Listener {
             if (Factions.checkFriendlyFire((Player) event.getEntity(), (Player) event.getDamager())) {
                 event.setCancelled(true);
             }
+            else if (!Factions.getFaction(Factions.getMemberFactionName(event.getEntity().getUniqueId())).getFactionAtWar(Factions.getMemberFactionName(event.getDamager().getUniqueId()))) {
+                Factions.getFaction(Factions.getMemberFactionName(event.getDamager().getUniqueId())).addAggression(1);
+            }
             else {
                 Factions.getFaction(Factions.getMemberFactionName(event.getEntity().getUniqueId())).addAggression(5.0f);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onKill (PlayerDeathEvent event) {
+        if (event.getEntity().getKiller() != null) {
+            if (!Factions.getFaction(Factions.getMemberFactionName(event.getEntity().getUniqueId())).getFactionAtWar(Factions.getMemberFactionName(event.getEntity().getKiller().getUniqueId()))) {
+                Factions.getFaction(Factions.getMemberFactionName(event.getEntity().getKiller().getUniqueId())).addAggression(20);
             }
         }
     }
