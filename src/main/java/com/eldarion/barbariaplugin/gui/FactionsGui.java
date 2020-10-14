@@ -110,6 +110,7 @@ public class FactionsGui implements Listener {
         Faction f = Factions.getFaction(Factions.getMemberFactionName(player.getUniqueId()));
         f.addFactionAtWar(name);
         Factions.getFaction(name).addFactionAtWar(f.getFactionName());
+        f.addAggression(1000);
         player.sendMessage("Your faction is now at war with: " + name);
     }
 
