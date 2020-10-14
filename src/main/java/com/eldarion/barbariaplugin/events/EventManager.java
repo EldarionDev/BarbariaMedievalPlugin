@@ -1,5 +1,6 @@
 package com.eldarion.barbariaplugin.events;
 
+import com.eldarion.barbariaplugin.factions.Faction;
 import com.eldarion.barbariaplugin.factions.Factions;
 import com.eldarion.barbariaplugin.gui.FactionsGui;
 import org.bukkit.Material;
@@ -94,6 +95,7 @@ public class EventManager implements Listener {
         if (event.getEntity().getKiller() != null) {
             if (!Factions.getFaction(Factions.getMemberFactionName(event.getEntity().getUniqueId())).getFactionAtWar(Factions.getMemberFactionName(event.getEntity().getKiller().getUniqueId()))) {
                 Factions.getFaction(Factions.getMemberFactionName(event.getEntity().getKiller().getUniqueId())).addAggression(20);
+                event.getEntity().getKiller().sendMessage("You committed a war crime!");
             }
         }
     }

@@ -164,11 +164,11 @@ public class Faction {
     }
 
     public void addLoyalty (float value) {
-        this.loyalty += loyalty;
+        this.loyalty += value;
     }
 
     public void addAggression (float value) {
-        this.aggression += aggression;
+        this.aggression += value;
     }
 
     public String getFactionName () {
