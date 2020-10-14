@@ -65,6 +65,12 @@ public class EventManager implements Listener {
         else if (FactionsGui.ownerChanger != null) {
             FactionsGui.changeOwner(event.getPlayer(), event.getMessage(), event);
         }
+        else if (FactionsGui.warDeclarer != null) {
+            FactionsGui.declareWar(event.getPlayer(), event.getMessage(), event);
+        }
+        else if (FactionsGui.ceaseFirePlayer != null) {
+            FactionsGui.ceaseFire(event.getPlayer(), event.getMessage(), event);
+        }
     }
 
     @EventHandler

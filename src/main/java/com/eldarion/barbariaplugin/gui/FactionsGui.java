@@ -90,10 +90,45 @@ public class FactionsGui implements Listener {
                 printStatsMessage(player);
                 break;
             case SHIELD:
+                ceaseFirePlayer = player;
+                ceaseFireMessage(player);
                 break;
             case DIAMOND_SWORD:
+                warDeclarer = player;
+                declareWarMessage(player);
                 break;
         }
+    }
+
+    public void declareWarMessage (Player player) {
+        player.sendMessage("Please enter the name of the faction you want to declare war to!");
+    }
+
+    public static void declareWar (Player player, String name, AsyncPlayerChatEvent event) {
+        if (!player.equals(warDeclarer)) return;
+        warDeclarer = null;
+        Faction f = Factions.getFaction(Factions.getMemberFactionName(player.getUniqueId()));
+        f.addFactionAtWar(name);
+        Factions.getFaction(name).addFactionAtWar(f.getFactionName());
+        player.sendMessage("Your faction is now at war with: " + name);
+    }
+
+    public void ceaseFireMessage (Player player) {
+        player.sendMessage("You are at war with following factions:");
+        Faction f = Factions.getFaction(Factions.getMemberFactionName(player.getUniqueId()));
+        for (String s : f.getFactionsAtWar()) {
+            player.sendMessage(s);
+        }
+        player.sendMessage("Please enter a faction you want to cease fire with!");
+    }
+
+    public static void ceaseFire (Player player, String name, AsyncPlayerChatEvent event) {
+        if (!player.equals(ceaseFirePlayer)) return;
+        ceaseFirePlayer = null;
+        Faction f = Factions.getFaction(Factions.getMemberFactionName(player.getUniqueId()));
+        f.stopWar(name);
+        Factions.getFaction(name).stopWar(f.getFactionName());
+        player.sendMessage("You have now ceased fire with: " + name);
     }
 
     public static void printStatsMessage (Player player) {
@@ -432,5 +467,7 @@ public class FactionsGui implements Listener {
     public static Player proposalSender = null;
     public static Player proposalDeletor = null;
     public static Player ownerChanger = null;
+    public static Player warDeclarer = null;
+    public static Player ceaseFirePlayer = null;
     private final Inventory inventory;
 }

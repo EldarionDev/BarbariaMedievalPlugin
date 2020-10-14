@@ -187,6 +187,18 @@ public class Faction {
         factionsAtWar.add(name);
     }
 
+    public List<String> getFactionsAtWar () {
+        return factionsAtWar;
+    }
+
+    public void stopWar (String name) {
+        for (String f : factionsAtWar) {
+            if (f.equalsIgnoreCase(name)) {
+                factionsAtWar.remove(f);
+            }
+        }
+    }
+
     public boolean getFactionNAP (String name) {
         if (factionsNAP.isEmpty()) return false;
         for (String f : factionsNAP) {
@@ -197,6 +209,10 @@ public class Faction {
 
     public void addFactionNAP (String name) {
         factionsNAP.add(name);
+    }
+
+    public List<String> getFactionsNAP () {
+        return factionsNAP;
     }
 
     HashMap<String, UUID> requests = new HashMap<String, UUID>();
