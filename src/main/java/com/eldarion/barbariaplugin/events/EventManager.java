@@ -87,6 +87,12 @@ public class EventManager implements Listener {
 
     @EventHandler
     public void onInventoryClick(final InventoryDragEvent event) {
-        event.setCancelled(true);
+        switch (event.getView().getTitle().toLowerCase()) {
+            case "factions menu":
+            case "requests":
+                event.setCancelled(true);
+                break;
+            default:
+        }
     }
 }
