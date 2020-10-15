@@ -23,7 +23,7 @@ class Condition {
 
 public class Contract {
 
-    enum Conditions {
+    public enum Conditions {
         GOLD, NAP
     }
 
@@ -94,7 +94,15 @@ public class Contract {
         rewards.add(c);
     }
 
-    String contractName;
+    public static List<String> getOffers () {
+        List<String> returnList = new ArrayList<>();
+        for (Conditions c : Conditions.values()) {
+            returnList.add(c.toString());
+        }
+        return returnList;
+    }
+
+    public String contractName;
     double executeInterval;
     double deadLine;
     Faction conditionFaction;

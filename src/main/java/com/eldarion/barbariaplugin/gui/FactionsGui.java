@@ -1,5 +1,6 @@
 package com.eldarion.barbariaplugin.gui;
 
+import com.eldarion.barbariaplugin.factions.Contract;
 import com.eldarion.barbariaplugin.factions.Faction;
 import com.eldarion.barbariaplugin.factions.Factions;
 import org.bukkit.Bukkit;
@@ -97,7 +98,42 @@ public class FactionsGui implements Listener {
                 warDeclarer = player;
                 declareWarMessage(player);
                 break;
+            case GOLD_INGOT:
+                tradeOffer = player;
+                offerTradeMessage(player);
+                break;
         }
+    }
+
+    public void offerTradeMessage (Player player) {
+        player.sendMessage("This are the things you can offer for trade: ");
+        for (String s : Contract.getOffers()) {
+            player.sendMessage(s);
+        }
+        player.sendMessage("Please enter one and afterwards the amplifier(time or amount) to continue.");
+        player.sendMessage("When you have finished enter exit.");
+        player.sendMessage("Now enter the name of the trade agreement.");
+    }
+
+    public void offerTrade (Player player, String name, AsyncPlayerChatEvent event) {
+        if (!player.equals(tradeOffer)) return;
+        if (tradeNameDone != 1) {
+            tradeNameDone = 1;
+            Factions.getFaction(Factions.getMemberFactionName(player.getUniqueId())).addTrade(name);
+            tradeName = name;
+        }
+        else if (name.equalsIgnoreCase("exit")) {
+            player.sendMessage("Created trade.");
+            tradeNameDone = 0;
+            tradeOffer = null;
+            tradeName = "";
+            return;
+        }
+        else {
+            String[] arrOfStr = name.split(" ");
+            Factions.getFaction(Factions.getMemberFactionName(player.getUniqueId())).getTrade(name).addCondition(Contract.Conditions.valueOf(arrOfStr[0]), Double.parseDouble(arrOfStr[1]));
+        }
+        player.sendMessage("Please enter another trade item or exit to finish the agreement.");
     }
 
     public void declareWarMessage (Player player) {
@@ -470,5 +506,8 @@ public class FactionsGui implements Listener {
     public static Player ownerChanger = null;
     public static Player warDeclarer = null;
     public static Player ceaseFirePlayer = null;
+    public static Player tradeOffer = null;
+    public static int tradeNameDone = 0;
+    public static String tradeName;
     private final Inventory inventory;
 }

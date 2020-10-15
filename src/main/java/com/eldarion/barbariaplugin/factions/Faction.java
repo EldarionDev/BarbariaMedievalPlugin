@@ -18,6 +18,19 @@ public class Faction {
         load();
     }
 
+    public void addTrade (String name) {
+        factionTrades.add(new Contract(name));
+    }
+
+    public Contract getTrade (String name) {
+        for (Contract c : factionTrades) {
+            if (c.contractName.equalsIgnoreCase(name)) {
+                return c;
+            }
+        }
+        return null;
+    }
+
     private void load () {
         JSONParser jsonParser = new JSONParser();
         try {
@@ -27,6 +40,7 @@ public class Faction {
             JSONArray jsonProposals = (JSONArray) jsonObject.get("proposals");
             JSONArray jsonAtWar = (JSONArray) jsonObject.get("at_war");
             JSONArray jsonNAP = (JSONArray) jsonObject.get("nap");
+            JSONArray jsonTrades = (JSONArray) jsonObject.get("faction_trades");
             this.trustworthy = (double) jsonObject.get("trustworthy");
             this.aggression = (double) jsonObject.get("aggression");
             this.loyalty = (double) jsonObject.get("loyalty");
@@ -52,6 +66,11 @@ public class Faction {
                 String currentF = iterator5.next().toString();
                 factionsNAP.add(currentF);
             }
+            Iterator iterator6 = jsonTrades.iterator();
+            while (iterator6.hasNext()) {
+                String trade = iterator6.next().toString();
+                factionTrades.add(new Contract(trade));
+            }
         }
         catch(FileNotFoundException e) {
 
@@ -69,6 +88,7 @@ public class Faction {
         JSONArray requests_array = new JSONArray();
         JSONArray proposer_array = new JSONArray();
         JSONArray proposals_array = new JSONArray();
+        JSONArray faction_trades = new JSONArray();
         JSONArray factions_at_war_array = new JSONArray();
         JSONArray factions_nap_array = new JSONArray();
         Iterator itR = requests.entrySet().iterator();
@@ -88,6 +108,10 @@ public class Faction {
         for (String f2 : factionsNAP) {
             factions_nap_array.add(f2);
         }
+        for (Contract c : factionTrades) {
+            faction_trades.add(c.contractName);
+            c.save();
+        }
         returnObject = object;
         returnObject.put("requests", requests_array);
         returnObject.put("proposers", proposer_array);
@@ -97,6 +121,7 @@ public class Faction {
         returnObject.put("aggression", this.aggression);
         returnObject.put("at_war", factions_at_war_array);
         returnObject.put("nap", factions_nap_array);
+        returnObject.put("faction_trades", faction_trades);
     }
 
     public void addRequest (Player player) {
@@ -225,6 +250,7 @@ public class Faction {
     HashMap<String, UUID> proposals = new HashMap<String, UUID>();
     List<String> factionsAtWar = new ArrayList<String>();
     List<String> factionsNAP = new ArrayList<String>();
+    List<Contract> factionTrades = new ArrayList<>();
     public String factionName;
     double trustworthy = 0;
     double loyalty = 0;
