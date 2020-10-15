@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Condition {
+    public Condition (Contract.Conditions t, double v) {
+        value = v;
+        type = t;
+    }
     public double value;
     Contract.Conditions type;
 }
@@ -15,10 +19,6 @@ public class Contract {
 
     enum Conditions {
         GOLD, NAP
-    }
-
-    public Contract () {
-
     }
 
     public void load () {
@@ -42,12 +42,14 @@ public class Contract {
         object.put("reward_faction", rewardFaction.getFactionName());
     }
 
-    public void addCondition (Conditions condition) {
-
+    public void addCondition (Conditions condition, double amplifier) {
+        Condition c = new Condition(condition, amplifier);
+        conditions.add(c);
     }
 
-    public void addReward (Conditions condition) {
-
+    public void addReward (Conditions condition, double amplifier) {
+        Condition c = new Condition(condition, amplifier);
+        rewards.add(c);
     }
 
     double executeInterval;
